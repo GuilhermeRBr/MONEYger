@@ -29,7 +29,7 @@ def main(page: ft.Page):
         stack_main.update()
 
     #pagina:
-    page.title = 'GASTÔMETRO'
+    page.title = 'MONEYger'
     page.theme_mode = 'dark'
     page.bgcolor = ft.colors.BLUE
     page.window.always_on_top = True
