@@ -1,11 +1,40 @@
 import flet as ft
+from flet import Colors, Icons
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from src.models.models import Transacao
 
+CONN = 'sqlite:///MONEYger.db'
+
+engine = create_engine(CONN, echo=True)
+Session = sessionmaker(bind=engine)
+session = Session()
+
+
+recebidoAll = 0
 def main(page: ft.Page):
 
+    global recebidoAll
+
+    home_valor = ft.Text(f"R$ {recebidoAll}", color="black")
+    lista_transacoes = ft.ListView()
+
     def cadastrar(e):
-        recebido = (main.content.controls[1].value)
-        descricao = (main.content.controls[3].value)
+        global recebidoAll
+        recebido = (add.content.controls[1].value)
+        descricao = (add.content.controls[3].value)
         print(recebido, descricao)
+
+        if recebido.isdigit():
+            nova_transacao = Transacao(valor=recebido, descricao=descricao)
+            session.add(nova_transacao)
+            session.commit()
+            print('Transacao salva com sucesso!')
+            recebidoAll += int(recebido) 
+            home_valor.value = f"R$ {recebidoAll}"  
+            stack_main.update()
+
+
 
     def btn_add(e):
         stack_main.controls.clear()
@@ -20,7 +49,7 @@ def main(page: ft.Page):
 
         stack_main.controls.append(home)
         stack_main.update()
-    
+        
     def btn_history(e):
         stack_main.controls.clear()
         stack_main.update()
@@ -31,7 +60,7 @@ def main(page: ft.Page):
     #pagina:
     page.title = 'MONEYger'
     page.theme_mode = 'dark'
-    page.bgcolor = ft.colors.BLUE
+    page.bgcolor = Colors.BLUE
     page.window.always_on_top = True
     page.window.width = 450
     page.window.height = 700
@@ -41,8 +70,8 @@ def main(page: ft.Page):
     page.horizontal_alignment = 'center'
     
     page.floating_action_button = ft.FloatingActionButton(
-        icon=ft.icons.ADD,
-        bgcolor=ft.colors.BLUE,
+        icon=Icons.ADD,
+        bgcolor=Colors.BLUE,
         shape=ft.CircleBorder(),
         width=70,
         height=70,
@@ -59,21 +88,17 @@ def main(page: ft.Page):
                 ft.Container(
                     content=ft.Column(
                         controls=[
-                            ft.IconButton(icon=ft.icons.HOME, icon_color=ft.colors.BLUE, icon_size=29, on_click=btn_home,padding=0,),
-                            ft.Text('HOME', color='black',size=15)
-                        ], alignment=ft.MainAxisAlignment.CENTER
+                            ft.IconButton(icon=Icons.HOME, icon_color=Colors.BLUE, icon_size=29, on_click=btn_home,  padding=0,)
+                        ],
+                        alignment=ft.MainAxisAlignment.CENTER
                     )
-                )
-                
-                
-                ,
-
-
+                ),
                 ft.Container(width=40),
-                ft.IconButton(icon=ft.icons.HISTORY, icon_color=ft.colors.BLUE, icon_size=29, on_click=btn_history),
+                ft.IconButton(icon=Icons.HISTORY, icon_color=Colors.BLUE, icon_size=29, on_click=lambda e:(btn_history(e))),
             ], alignment=ft.MainAxisAlignment.SPACE_AROUND
         )
     )
+
 
 
     home = ft.Container(        
@@ -81,23 +106,21 @@ def main(page: ft.Page):
         height=550,
         border_radius=20,
         bgcolor='#f6f6f6ff',
-        shadow=ft.BoxShadow(blur_radius=10,color=ft.colors.with_opacity(opacity=0.5, color='black')),
-        padding=50, content=ft.Column([
-            ft.Text('Home', color='black'),
-            ]
-        )
+        shadow=ft.BoxShadow(blur_radius=10,color=Colors.with_opacity(opacity=0.5, color='black')),
+        padding=50, content=ft.Column([home_valor])
     )
 
+
+    for i in session.query(Transacao).all():
+        lista_transacoes.controls.append(ft.Text(f'R$ {i.valor} - {i.descricao}', color='black'))
     history = ft.Container(        
         width=400,
         height=550,
         border_radius=20,
         bgcolor='#f6f6f6ff',
-        shadow=ft.BoxShadow(blur_radius=10,color=ft.colors.with_opacity(opacity=0.5, color='black')),
-        padding=50, content=ft.Column([
-            ft.Text('Historico', color='black'),
-            ]
-        )
+        shadow=ft.BoxShadow(blur_radius=10,color=Colors.with_opacity(opacity=0.5, color='black')),
+        padding=50, 
+        content=ft.Column([ft.Text('HISTÓRICO:', color='black'), lista_transacoes])
     )
 
 
@@ -106,7 +129,7 @@ def main(page: ft.Page):
         height=550,
         border_radius=20,
         bgcolor='#f6f6f6ff',
-        shadow=ft.BoxShadow(blur_radius=10,color=ft.colors.with_opacity(opacity=0.5, color='black')),
+        shadow=ft.BoxShadow(blur_radius=10,color=Colors.with_opacity(opacity=0.5, color='black')),
         padding=50,
         content=ft.Column([
             ft.Text('VALOR:', color='black'),
@@ -128,13 +151,9 @@ def main(page: ft.Page):
         ) 
     )
 
-    stack_main = ft.Stack(
-        controls=[ home
-
-        ]
-    )
+    stack_main = ft.Stack(controls=[home])
     
     page.add(stack_main)
 
-ft.app(target=main, view=ft.WEB_BROWSER)
+ft.app(target=main)
 
