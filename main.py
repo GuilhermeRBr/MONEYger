@@ -3,6 +3,8 @@ from flet import Colors, Icons
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from src.models.models import Transacao
+from datetime import datetime
+
 
 CONN = 'sqlite:///MONEYger.db'
 
@@ -11,26 +13,43 @@ Session = sessionmaker(bind=engine)
 session = Session()
 
 
+
+
 recebidoAll = 0
+for i in session.query(Transacao).all():
+    recebidoAll += i.valor 
+
 def main(page: ft.Page):
+    
+    
 
     global recebidoAll
 
-    home_valor = ft.Text(f"R$ {recebidoAll}", color="black")
+    home_valor = ft.Text(f"R$ {recebidoAll}", color="black", size=50)
     lista_transacoes = ft.ListView()
 
     def cadastrar(e):
         global recebidoAll
+
         recebido = (add.content.controls[1].value)
         descricao = (add.content.controls[3].value)
+        radio_stats = (add.content.controls[4].value)
         print(recebido, descricao)
 
         if recebido.isdigit():
-            nova_transacao = Transacao(valor=recebido, descricao=descricao)
+            time = datetime.now()
+            data_formatada = time.strftime('%d/%m/%Y %H:%M:%S')
+            nova_transacao = Transacao(data=data_formatada,valor=recebido, descricao=descricao)
             session.add(nova_transacao)
             session.commit()
+            if radio_stats == 'recebido':
+                recebidoAll += nova_transacao.valor
+            else:
+                recebidoAll -= nova_transacao.valor
+
+            lista_transacoes.controls.append(ft.Text(f'{nova_transacao.data} - R$ {nova_transacao.valor} - {nova_transacao.descricao}', color='black'))
             print('Transacao salva com sucesso!')
-            recebidoAll += int(recebido) 
+            print(radio_stats)
             home_valor.value = f"R$ {recebidoAll}"  
             stack_main.update()
 
@@ -53,9 +72,10 @@ def main(page: ft.Page):
     def btn_history(e):
         stack_main.controls.clear()
         stack_main.update()
-
+    
         stack_main.controls.append(history)
         stack_main.update()
+
 
     #pagina:
     page.title = 'MONEYger'
@@ -107,7 +127,9 @@ def main(page: ft.Page):
         border_radius=20,
         bgcolor='#f6f6f6ff',
         shadow=ft.BoxShadow(blur_radius=10,color=Colors.with_opacity(opacity=0.5, color='black')),
-        padding=50, content=ft.Column([home_valor])
+        padding=50, content=ft.Column([
+            ft.Text('Saldo:', color='black', size=30),
+            home_valor])
     )
 
 
@@ -122,7 +144,6 @@ def main(page: ft.Page):
         padding=50, 
         content=ft.Column([ft.Text('HISTÓRICO:', color='black'), lista_transacoes])
     )
-
 
     add = ft.Container(
         width=400,
@@ -146,6 +167,18 @@ def main(page: ft.Page):
                          width=300,
                          color='black',
                          ),
+            ft.RadioGroup(
+                content=ft.Row([
+                    ft.Radio(value='recebido',
+                             label='Recebi',
+                             fill_color='red',
+                             label_style=ft.TextStyle(color='black')),
+                    ft.Radio(value='pago',
+                             label='Paguei',
+                             fill_color='red',
+                             label_style=ft.TextStyle(color='black'))
+                ])
+            ),
             ft.ElevatedButton('SALVAR', on_click=cadastrar)
             ]
         ) 

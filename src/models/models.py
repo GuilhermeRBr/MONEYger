@@ -12,6 +12,7 @@ Base = declarative_base()
 class Transacao(Base):
     __tablename__ = 'Transacao'
     id = Column(Integer, primary_key=True)
+    data = Column(String(20))
     valor = Column(Float())
     descricao = Column(String(50))
 
