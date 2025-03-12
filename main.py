@@ -22,11 +22,12 @@ else:
 
 def main(page: ft.Page):
     
-    
+    def formatar_moeda(valor):
+        return f"{valor:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
 
     global recebidoAll
 
-    home_valor = ft.Text(f"R$ {recebidoAll}", color="black", size=50)
+    home_valor = ft.Text(f"R$ {formatar_moeda(recebidoAll)}", color="white", size=50)
     lista_transacoes = ft.ListView()
 
     def cadastrar(e):
@@ -55,15 +56,18 @@ def main(page: ft.Page):
 
             session.commit()
 
-            lista_transacoes.controls.append(ft.Text(f'{nova_transacao.data} - R$ {nova_transacao.valor} - {nova_transacao.descricao} - {nova_transacao.status}', color='black'))
+            total = session.query(func.sum(Transacao.total)).scalar()
+
+            home_valor.value = f"R$ {formatar_moeda(total)}"  
+            stack_main.update()
+
+            lista_transacoes.controls.append(ft.Text(f'{nova_transacao.data} - R$ {formatar_moeda(nova_transacao.valor)} - {nova_transacao.descricao} - {nova_transacao.status}', color='black'))
             
 
             print('Transacao salva com sucesso!')
             print(radio_stats)
 
 
-            home_valor.value = f"R$ {recebidoAll}"  
-            stack_main.update()
 
 
 
@@ -139,9 +143,23 @@ def main(page: ft.Page):
         border_radius=20,
         bgcolor='#f6f6f6ff',
         shadow=ft.BoxShadow(blur_radius=10,color=Colors.with_opacity(opacity=0.5, color='black')),
-        padding=50, content=ft.Column([
-            ft.Text('Saldo:', color='black', size=30),
-            home_valor])
+        padding=30,
+        alignment=ft.alignment.center,
+        content=ft.Column([
+            ft.Container(
+                width=350,
+                height=150,
+                bgcolor='black',
+                border_radius=20,
+                padding=15,
+                alignment=ft.alignment.center,
+                content=ft.Column([ 
+                    ft.Text('Saldo:', color='white', size=30,),             
+                    home_valor,
+                    
+                ])
+            )
+        ])
     )
 
 
@@ -167,7 +185,7 @@ def main(page: ft.Page):
         content=ft.Column([
             ft.Text('VALOR:', color='black'),
             ft.TextField(prefix_text='R$',
-                         label='Digite o valor que você recebeu...', text_align=ft.TextAlign.LEFT,
+                         label='Digite o valor', text_align=ft.TextAlign.LEFT,
                          width=300,
                          color='black',
                          keyboard_type=ft.KeyboardType.NUMBER,
@@ -189,7 +207,8 @@ def main(page: ft.Page):
                              label='Paguei',
                              fill_color='red',
                              label_style=ft.TextStyle(color='black'))
-                ])
+                ]),
+                value='Recebi'
             ),
             ft.ElevatedButton('SALVAR', on_click=cadastrar)
             ]
