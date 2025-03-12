@@ -26,7 +26,7 @@ MONEYger é um aplicativo desenvolvido com **Flet** para gerenciar suas finança
    ```
 3. ▶️ Execute o aplicativo:
    ```sh
-   python app.py
+   flet run main.py
    ```
 
 ## 🤝 Contribuição
