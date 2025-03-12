@@ -11,9 +11,12 @@ Base = declarative_base()
 
 class Transacao(Base):
     __tablename__ = 'Transacao'
+    
     id = Column(Integer, primary_key=True)
-    data = Column(String(20))
+    data = Column(String(19))
     valor = Column(Float())
     descricao = Column(String(50))
+    status = Column(String(6))
+    total = Column(Float(), default=0)
 
 Base.metadata.create_all(engine)

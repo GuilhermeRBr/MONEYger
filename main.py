@@ -1,6 +1,6 @@
 import flet as ft
 from flet import Colors, Icons
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, func
 from sqlalchemy.orm import sessionmaker
 from src.models.models import Transacao
 from datetime import datetime
@@ -14,10 +14,11 @@ session = Session()
 
 
 
-
-recebidoAll = 0
-for i in session.query(Transacao).all():
-    recebidoAll += i.valor 
+total = session.query(func.sum(Transacao.total)).scalar()
+if total is not None:
+    recebidoAll = total
+else:
+    recebidoAll = 0
 
 def main(page: ft.Page):
     
@@ -39,17 +40,28 @@ def main(page: ft.Page):
         if recebido.isdigit():
             time = datetime.now()
             data_formatada = time.strftime('%d/%m/%Y %H:%M:%S')
-            nova_transacao = Transacao(data=data_formatada,valor=recebido, descricao=descricao)
+            nova_transacao = Transacao(data=data_formatada,
+                                       valor=recebido,
+                                       descricao=descricao, status=radio_stats,
+                                       
+                                       )
             session.add(nova_transacao)
             session.commit()
-            if radio_stats == 'recebido':
-                recebidoAll += nova_transacao.valor
-            else:
-                recebidoAll -= nova_transacao.valor
 
-            lista_transacoes.controls.append(ft.Text(f'{nova_transacao.data} - R$ {nova_transacao.valor} - {nova_transacao.descricao}', color='black'))
+            if radio_stats == 'Recebi':
+                nova_transacao.total += nova_transacao.valor
+            else:
+                nova_transacao.total -= nova_transacao.valor
+
+            session.commit()
+
+            lista_transacoes.controls.append(ft.Text(f'{nova_transacao.data} - R$ {nova_transacao.valor} - {nova_transacao.descricao} - {nova_transacao.status}', color='black'))
+            
+
             print('Transacao salva com sucesso!')
             print(radio_stats)
+
+
             home_valor.value = f"R$ {recebidoAll}"  
             stack_main.update()
 
@@ -134,7 +146,7 @@ def main(page: ft.Page):
 
 
     for i in session.query(Transacao).all():
-        lista_transacoes.controls.append(ft.Text(f'R$ {i.valor} - {i.descricao}', color='black'))
+        lista_transacoes.controls.append(ft.Text(f'{i.data} - R$ {i.valor} - {i.descricao} - {i.status}', color='black'))
     history = ft.Container(        
         width=400,
         height=550,
@@ -169,11 +181,11 @@ def main(page: ft.Page):
                          ),
             ft.RadioGroup(
                 content=ft.Row([
-                    ft.Radio(value='recebido',
+                    ft.Radio(value='Recebi',
                              label='Recebi',
                              fill_color='red',
                              label_style=ft.TextStyle(color='black')),
-                    ft.Radio(value='pago',
+                    ft.Radio(value='Paguei',
                              label='Paguei',
                              fill_color='red',
                              label_style=ft.TextStyle(color='black'))
