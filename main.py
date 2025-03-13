@@ -34,7 +34,7 @@ def main(page: ft.Page):
         global recebidoAll
 
         recebido = (add.content.controls[1].value)
-        descricao = (add.content.controls[3].value)
+        descricao = (add.content.controls[3].value).capitalize()
         radio_stats = (add.content.controls[4].value)
         print(recebido, descricao)
 
@@ -61,7 +61,17 @@ def main(page: ft.Page):
             home_valor.value = f"R$ {formatar_moeda(total)}"  
             stack_main.update()
 
-            lista_transacoes.controls.append(ft.Text(f'{nova_transacao.data} - R$ {formatar_moeda(nova_transacao.valor)} - {nova_transacao.descricao} - {nova_transacao.status}', color='black'))
+            lista_transacoes.controls.append(ft.Container(
+                ft.Text(f'{nova_transacao.data} - R$ {nova_transacao.valor} - {nova_transacao.status} - {nova_transacao.descricao}',
+                width=370,
+                color='white'),
+                bgcolor='black',
+                alignment=ft.alignment.center,
+                padding=5,
+                margin=5,
+                border_radius=10,
+
+                ) )
             
 
             print('Transacao salva com sucesso!')
@@ -136,18 +146,18 @@ def main(page: ft.Page):
     )
 
 
-
+    #botao home
     home = ft.Container(        
         width=400,
         height=550,
         border_radius=20,
         bgcolor='#f6f6f6ff',
         shadow=ft.BoxShadow(blur_radius=10,color=Colors.with_opacity(opacity=0.5, color='black')),
-        padding=30,
+        padding=20,
         alignment=ft.alignment.center,
         content=ft.Column([
             ft.Container(
-                width=350,
+                width=370,
                 height=150,
                 bgcolor='black',
                 border_radius=20,
@@ -162,19 +172,31 @@ def main(page: ft.Page):
         ])
     )
 
-
+    #historico:
     for i in session.query(Transacao).all():
-        lista_transacoes.controls.append(ft.Text(f'{i.data} - R$ {i.valor} - {i.descricao} - {i.status}', color='black'))
+        lista_transacoes.controls.append(
+            ft.Container(
+                ft.Text(f'{i.data} - R$ {i.valor} - {i.status} - {i.descricao}', color='white'),
+                width=550,
+                bgcolor='black',
+                alignment=ft.alignment.center,
+                padding=20,
+                margin=5,
+                border_radius=10,
+
+                )  
+            )
     history = ft.Container(        
         width=400,
         height=550,
         border_radius=20,
         bgcolor='#f6f6f6ff',
         shadow=ft.BoxShadow(blur_radius=10,color=Colors.with_opacity(opacity=0.5, color='black')),
-        padding=50, 
-        content=ft.Column([ft.Text('HISTÓRICO:', color='black'), lista_transacoes])
+        padding=10, 
+        content=ft.Column([ft.Text('HISTÓRICO:', color='black'), lista_transacoes], scroll='auto')
     )
 
+    #botão add
     add = ft.Container(
         width=400,
         height=550,
