@@ -1,4 +1,5 @@
 MONEYger.db
 __pycache__/
-*.pyc
-*.pyo
+src/__init__.py
+src/models/__pycache__/
+src/models/__init__.py
