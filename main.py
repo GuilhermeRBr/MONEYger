@@ -106,7 +106,7 @@ def main(page: ft.Page):
     #pagina:
     page.title = 'MONEYger'
     page.theme_mode = 'dark'
-    page.bgcolor = Colors.BLUE
+    page.bgcolor = '#012F52'
     page.window.always_on_top = True
     page.window.width = 450
     page.window.height = 700
@@ -117,7 +117,7 @@ def main(page: ft.Page):
     
     page.floating_action_button = ft.FloatingActionButton(
         icon=Icons.ADD,
-        bgcolor=Colors.BLUE,
+        bgcolor='#003E6D',
         shape=ft.CircleBorder(),
         width=70,
         height=70,
@@ -127,20 +127,29 @@ def main(page: ft.Page):
     
 
     page.bottom_appbar = ft.BottomAppBar(
-        bgcolor= '#F6F6F6FF',
+        bgcolor= '#D2D2D2',
         shape=ft.NotchShape.CIRCULAR,
         content=ft.Row(
             controls=[
                 ft.Container(
                     content=ft.Column(
                         controls=[
-                            ft.IconButton(icon=Icons.HOME, icon_color=Colors.BLUE, icon_size=29, on_click=btn_home,  padding=0,)
+                            ft.IconButton(
+                                icon=Icons.HOME,                  icon_color='#003E6D',
+                                icon_size=29, on_click=btn_home,  
+                                padding=0,
+                                )
                         ],
                         alignment=ft.MainAxisAlignment.CENTER
                     )
                 ),
                 ft.Container(width=40),
-                ft.IconButton(icon=Icons.HISTORY, icon_color=Colors.BLUE, icon_size=29, on_click=lambda e:(btn_history(e))),
+                ft.IconButton(
+                    icon=Icons.HISTORY, 
+                    icon_color='#003E6D', 
+                    icon_size=29, 
+                    on_click=lambda e:(btn_history(e))
+                    ),
             ], alignment=ft.MainAxisAlignment.SPACE_AROUND
         )
     )
@@ -151,7 +160,7 @@ def main(page: ft.Page):
         width=400,
         height=550,
         border_radius=20,
-        bgcolor='#f6f6f6ff',
+        bgcolor='#17181B',
         shadow=ft.BoxShadow(blur_radius=10,color=Colors.with_opacity(opacity=0.5, color='black')),
         padding=20,
         alignment=ft.alignment.center,
@@ -190,10 +199,10 @@ def main(page: ft.Page):
         width=400,
         height=550,
         border_radius=20,
-        bgcolor='#f6f6f6ff',
+        bgcolor='#17181B',
         shadow=ft.BoxShadow(blur_radius=10,color=Colors.with_opacity(opacity=0.5, color='black')),
         padding=10, 
-        content=ft.Column([ft.Text('HISTÓRICO:', color='black'), lista_transacoes], scroll='auto')
+        content=ft.Column([ft.Text('HISTÓRICO:', color='white'), lista_transacoes], scroll='auto')
     )
 
     #botão add
@@ -201,34 +210,34 @@ def main(page: ft.Page):
         width=400,
         height=550,
         border_radius=20,
-        bgcolor='#f6f6f6ff',
+        bgcolor='#17181B',
         shadow=ft.BoxShadow(blur_radius=10,color=Colors.with_opacity(opacity=0.5, color='black')),
         padding=50,
         content=ft.Column([
-            ft.Text('VALOR:', color='black'),
+            ft.Text('VALOR:', color='white'),
             ft.TextField(prefix_text='R$',
                          label='Digite o valor', text_align=ft.TextAlign.LEFT,
                          width=300,
-                         color='black',
+                         color='white',
                          keyboard_type=ft.KeyboardType.NUMBER,
                          input_filter=lambda c: c.isdigit(),
                          ),
-            ft.Text('De onde veio esse dinheiro:', color='black'),
+            ft.Text('De onde veio o dinheiro:', color='white'),
             ft.TextField(label='Descrição',
                          text_align=ft.TextAlign.LEFT,
                          width=300,
-                         color='black',
+                         color='white',
                          ),
             ft.RadioGroup(
                 content=ft.Row([
                     ft.Radio(value='Recebi',
                              label='Recebi',
                              fill_color='red',
-                             label_style=ft.TextStyle(color='black')),
+                             label_style=ft.TextStyle(color='white')),
                     ft.Radio(value='Paguei',
                              label='Paguei',
                              fill_color='red',
-                             label_style=ft.TextStyle(color='black'))
+                             label_style=ft.TextStyle(color='white'))
                 ]),
                 value='Recebi'
             ),
