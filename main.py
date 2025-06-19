@@ -106,7 +106,7 @@ def main(page: ft.Page):
     #pagina:
     page.title = 'MONEYger'
     page.theme_mode = 'dark'
-    page.bgcolor = '#012F52'
+    page.bgcolor = "#0074CC"
     page.window.always_on_top = True
     page.window.width = 450
     page.window.height = 700
@@ -115,9 +115,10 @@ def main(page: ft.Page):
     page.vertical_alignment = 'center'
     page.horizontal_alignment = 'center'
     
+    #botao flutuante:
     page.floating_action_button = ft.FloatingActionButton(
         icon=Icons.ADD,
-        bgcolor='#003E6D',
+        bgcolor='#0074CC',
         shape=ft.CircleBorder(),
         width=70,
         height=70,
@@ -135,7 +136,7 @@ def main(page: ft.Page):
                     content=ft.Column(
                         controls=[
                             ft.IconButton(
-                                icon=Icons.HOME,                  icon_color='#003E6D',
+                                icon=Icons.HOME,                  icon_color='#0074CC',
                                 icon_size=29, on_click=btn_home,  
                                 padding=0,
                                 )
@@ -146,7 +147,7 @@ def main(page: ft.Page):
                 ft.Container(width=40),
                 ft.IconButton(
                     icon=Icons.HISTORY, 
-                    icon_color='#003E6D', 
+                    icon_color='#0074CC', 
                     icon_size=29, 
                     on_click=lambda e:(btn_history(e))
                     ),
@@ -241,7 +242,9 @@ def main(page: ft.Page):
                 ]),
                 value='Recebi'
             ),
-            ft.ElevatedButton('SALVAR', on_click=cadastrar)
+            ft.ElevatedButton('SALVAR', on_click=cadastrar),
+
+
             ]
         ) 
     )
