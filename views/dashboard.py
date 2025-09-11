@@ -22,30 +22,32 @@ class DashboardView:
         recent_transactions = self.data_manager.get_all_transactions()[:3]  # Últimas 3 transações
         
         return ft.Container(
-            content=ft.Column([
-                # Header com saldo - agora pega toda a largura
-                BalanceCard(balance).build(),
-                
-                # Conteúdo principal
-                ft.Container(
-                    content=ft.Column([
-                        # Gráfico
-                        ChartWidget(total_income, total_expenses).build(),
-                        
-                        ft.Divider(color=AppColors.QUATERNARY, height=20),
-                        
-                        # Cards de resumo
-                        SummaryCards(total_income, total_expenses, transactions_count, len(self.data_manager.get_expense_categories())).build(),
-                        
-                        ft.Divider(color=AppColors.QUATERNARY, height=20),
-                        
-                        # Transações recentes
-                        RecentTransactions(recent_transactions).build()
-                        
-                    ], spacing=15, scroll=ft.ScrollMode.AUTO),
-                    padding=ft.padding.all(16)
-                )
-            ], spacing=0),
+            content=ft.Column(
+                [
+                    BalanceCard(balance).build(),
+                    ft.Container(
+                        content=ft.Column(
+                            [
+                                ChartWidget(total_income, total_expenses).build(),
+                                ft.Divider(color=AppColors.QUATERNARY, height=20),
+                                SummaryCards(
+                                    total_income,
+                                    total_expenses,
+                                    transactions_count,
+                                    len(self.data_manager.get_expense_categories())
+                                ).build(),
+                                ft.Divider(color=AppColors.QUATERNARY, height=20),
+                                RecentTransactions(recent_transactions).build()
+                            ],
+                            spacing=15,
+                        ),
+                        padding=ft.padding.all(16),
+                    )
+                ],
+                spacing=0,
+                expand=True,
+                scroll=ft.ScrollMode.AUTO,  # << aqui que faz diferença
+            ),
             expand=True,
-            bgcolor=AppColors.BACKGROUND
-            )
+            bgcolor=AppColors.BACKGROUND,
+        )

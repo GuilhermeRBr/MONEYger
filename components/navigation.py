@@ -47,7 +47,7 @@ class NavigationComponent:
                     alignment=ft.alignment.center,
                 ),
             ], alignment=ft.MainAxisAlignment.SPACE_AROUND),
-            height=80,
+            height=70,
             bgcolor=AppColors.GRAY_DARK,
             padding=ft.padding.symmetric(horizontal=20, vertical=10),
             border_radius=ft.border_radius.only(top_left=20, top_right=20)
