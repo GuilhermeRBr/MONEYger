@@ -23,9 +23,9 @@ class BalanceCard:
             ], 
             horizontal_alignment=ft.CrossAxisAlignment.START,
             spacing=5),
-            bgcolor=AppColors.BLACK,
+            bgcolor=AppColors.GRAY_DARK,
             padding=ft.padding.all(20),
             margin=ft.margin.only(left=16, right=16, top=16, bottom=8),
             border_radius=12,
-            width=None  # Pega toda a largura disponível
+            width=360
         )

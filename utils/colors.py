@@ -3,10 +3,10 @@ import flet as ft
 class AppColors:
     # Cores atualizadas pelo usuário
     PRIMARY = "#f64a00"      # Laranja vibrante
-    SECONDARY = "#ff004f"    # Rosa/vermelho vibrante
+    SECONDARY = "#db0045"    # Rosa/vermelho vibrante
     TERTIARY = "#00a000"     # Verde
-    QUATERNARY = "#744e95"   # Roxo escuro
-    BACKGROUND = "#271811"   # Marrom escuro
+    QUATERNARY = "#632d8f"   # Roxo escuro
+    BACKGROUND = "#222020"   # Marrom escuro
     
     # Cores complementares
     WHITE = "#FFFFFF"
@@ -17,7 +17,7 @@ class AppColors:
     
     # Cores para estado
     SUCCESS = "#00a000"
-    ERROR = "#ff004f"
+    ERROR = "#db0045"
     WARNING = "#FF9800"
     INFO = "#2196F3"
 

@@ -40,7 +40,7 @@ class DashboardView:
                         ft.Divider(color=AppColors.QUATERNARY, height=20),
                         
                         # Transações recentes
-                        RecentTransactions(recent_transactions).build(),
+                        RecentTransactions(recent_transactions).build()
                         
                     ], spacing=15, scroll=ft.ScrollMode.AUTO),
                     padding=ft.padding.all(16)

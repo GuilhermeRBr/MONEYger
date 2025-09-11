@@ -15,19 +15,8 @@ MONEYger é um aplicativo desenvolvido com **Flet** para gerenciar suas finança
 - 🗄️ **SQLite / SQLAlchemy (para armazenamento de dados)**
 
 ## 📌 Como Usar
-1. 🔽 Clone o repositório:
-   ```sh
-   git clone https://github.com/GuilhermeRBr/moneyger.git
-   cd moneyger
-   ```
-2. 📦 Instale as dependências:
-   ```sh
-   pip install flet sqlalchemy
-   ```
-3. ▶️ Execute o aplicativo:
-   ```sh
-   flet run main.py
-   ```
+
+# "EM DESENVOLVIMENTO"
 
 ## 🤝 Contribuição
 Sinta-se à vontade para sugerir melhorias ou relatar problemas abrindo uma **issue** ou enviando um **pull request**.
