@@ -10,7 +10,7 @@ class AddTransactionView:
         self.setup_form()
 
     def setup_form(self):
-        # Campos do formulário
+
         self.value_field = ft.TextField(
             label="VALOR:",
             prefix_text="R$ ",
@@ -67,7 +67,6 @@ class AddTransactionView:
     def build(self):
         return ft.Container(
             content=ft.Column([
-                # Header
                 ft.Container(
                     content=ft.Text(
                         "Nova Transação",
@@ -80,7 +79,6 @@ class AddTransactionView:
                     alignment=ft.alignment.center
                 ),
                 
-                # Formulário
                 ft.Container(
                     content=ft.Column([
                         self.value_field,
@@ -95,7 +93,6 @@ class AddTransactionView:
                         
                         ft.Container(height=20),
                         
-                        # Tipo de transação
                         ft.Container(
                             content=ft.Column([
                                 ft.Text(
@@ -109,7 +106,6 @@ class AddTransactionView:
                             margin=ft.margin.only(bottom=20)
                         ),
                         
-                        # Botão salvar
                         ft.Container(
                             content=ft.ElevatedButton(
                                 text="SALVAR",
@@ -138,13 +134,12 @@ class AddTransactionView:
         )
 
     def save_transaction(self, e):
-        # Validação
+
         if not self.value_field.value or not self.description_field.value or not self.category_field.value:
             self.show_snackbar("Por favor, preencha todos os campos!", AppColors.ERROR)
             return
         
         try:
-            # Processa o valor (remove espaços e converte vírgula para ponto)
             value_text = self.value_field.value.replace(",", ".").strip()
             amount = float(value_text)
             
@@ -152,7 +147,6 @@ class AddTransactionView:
                 self.show_snackbar("O valor deve ser maior que zero!", AppColors.ERROR)
                 return
             
-            # Adiciona a transação
             self.data_manager.add_transaction(
                 amount=amount,
                 category=self.category_field.value.strip(),
@@ -161,13 +155,10 @@ class AddTransactionView:
                 transaction_type=self.transaction_type.value
             )
             
-            # Limpa o formulário
             self.clear_form()
             
-            # Mostra sucesso
             self.show_snackbar("Transação adicionada com sucesso!", AppColors.SUCCESS)
-            
-            # Chama callback de sucesso
+
             self.on_transaction_added()
             
         except ValueError:

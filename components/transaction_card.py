@@ -19,7 +19,6 @@ class TransactionCard:
         
         return ft.Container(
             content=ft.Row([
-                # Ícone do tipo
                 ft.Container(
                     content=ft.Icon(
                         type_icon,
@@ -29,7 +28,6 @@ class TransactionCard:
                     padding=ft.padding.only(right=10)
                 ),
                 
-                # Informações da transação
                 ft.Container(
                     content=ft.Column([
                         ft.Text(
@@ -52,7 +50,6 @@ class TransactionCard:
                     expand=True
                 ),
                 
-                # Botões de ação
                 ft.Container(
                     content=ft.Row([
                         ft.IconButton(

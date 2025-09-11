@@ -11,7 +11,7 @@ class NavigationComponent:
     def build(self):
         return ft.Container(
             content=ft.Row([
-                # Botão Dashboard
+
                 ft.Container(
                     content=ft.IconButton(
                         icon=Icons.HOME,
@@ -22,8 +22,7 @@ class NavigationComponent:
                     expand=1,
                     alignment=ft.alignment.center,
                 ),
-                
-                # Botão Adicionar (centro com destaque)
+
                 ft.Container(
                     content=ft.FloatingActionButton(
                         icon=Icons.ADD,
@@ -34,8 +33,7 @@ class NavigationComponent:
                     ),
                     alignment=ft.alignment.center,
                 ),
-                
-                # Botão Histórico
+
                 ft.Container(
                     content=ft.IconButton(
                         icon=Icons.HISTORY,
@@ -48,7 +46,7 @@ class NavigationComponent:
                 ),
             ], alignment=ft.MainAxisAlignment.SPACE_AROUND),
             height=70,
-            bgcolor=AppColors.GRAY_DARK,
+            bgcolor="#444343",
             padding=ft.padding.symmetric(horizontal=20, vertical=10),
             border_radius=ft.border_radius.only(top_left=20, top_right=20)
         )
