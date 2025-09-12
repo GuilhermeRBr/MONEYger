@@ -1,9 +1,9 @@
 import flet as ft
-from utils.colors import AppColors
-from components.balance_card import BalanceCard
-from components.chart_widget import ChartWidget
-from components.summary_cards import SummaryCards
-from components.recent_transactions import RecentTransactions
+from src.utils.colors import AppColors
+from src.components.balance_card import BalanceCard
+from src.components.chart_widget import ChartWidget
+from src.components.summary_cards import SummaryCards
+from src.components.recent_transactions import RecentTransactions
 
 class DashboardView:
     def __init__(self, data_manager, refresh_callback):

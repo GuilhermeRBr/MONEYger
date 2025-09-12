@@ -1,6 +1,6 @@
 import flet as ft
 from flet import Icons
-from utils.colors import AppColors
+from src.utils.colors import AppColors
 
 class NavigationComponent:
     def __init__(self, on_dashboard_click, on_add_click, on_history_click):

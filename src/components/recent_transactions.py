@@ -1,6 +1,6 @@
 import flet as ft
 from flet import Icons
-from utils.colors import AppColors
+from src.utils.colors import AppColors
 
 class RecentTransactions:
     def __init__(self, transactions):

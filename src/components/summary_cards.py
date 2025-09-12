@@ -1,5 +1,5 @@
 import flet as ft
-from utils.colors import AppColors
+from src.utils.colors import AppColors
 
 class SummaryCards:
     def __init__(self, total_income, total_expenses, transactions_count, categories_count):

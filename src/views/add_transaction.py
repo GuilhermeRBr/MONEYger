@@ -1,5 +1,5 @@
 import flet as ft
-from utils.colors import AppColors
+from src.utils.colors import AppColors
 from datetime import datetime
 
 class AddTransactionView:

@@ -1,6 +1,6 @@
 import flet as ft
-from utils.colors import AppColors
-from components.transaction_card import TransactionCard
+from src.utils.colors import AppColors
+from src.components.transaction_card import TransactionCard
 
 class TransactionHistoryView:
     def __init__(self, data_manager, refresh_callback):

@@ -1,10 +1,10 @@
 import flet as ft
-from views.dashboard import DashboardView
-from views.add_transaction import AddTransactionView
-from views.transaction_history import TransactionHistoryView
-from components.navigation import NavigationComponent
-from utils.colors import AppColors
-from data.mock_data import DataManager
+from src.views.dashboard import DashboardView
+from src.views.add_transaction import AddTransactionView
+from src.views.transaction_history import TransactionHistoryView
+from src.components.navigation import NavigationComponent
+from src.utils.colors import AppColors
+from src.data.mock_data import DataManager
 
 class ExpenseManagerApp:
     def __init__(self, page: ft.Page):

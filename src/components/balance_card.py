@@ -1,5 +1,5 @@
 import flet as ft
-from utils.colors import AppColors
+from src.utils.colors import AppColors
 
 class BalanceCard:
     def __init__(self, balance):

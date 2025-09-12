@@ -1,5 +1,5 @@
 import flet as ft
-from utils.colors import AppColors
+from src.utils.colors import AppColors
 
 class ChartWidget:
     def __init__(self, income, expenses):

@@ -1,6 +1,6 @@
 import flet as ft
 from flet import Icons
-from utils.colors import AppColors
+from src.utils.colors import AppColors
 
 class TransactionCard:
     def __init__(self, transaction, on_delete=None, on_details=None):
