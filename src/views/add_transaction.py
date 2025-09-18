@@ -1,6 +1,7 @@
 import flet as ft
 from src.utils.colors import AppColors
 from datetime import datetime
+from src.models.transaction import add_transaction
 
 class AddTransactionView:
     def __init__(self, data_manager, on_transaction_added, page):
@@ -45,7 +46,7 @@ class AddTransactionView:
             text_style=ft.TextStyle(color=AppColors.WHITE)
         )
         
-        # RadioGroup para tipo de transação
+
         self.transaction_type = ft.RadioGroup(
             content=ft.Row([
                 ft.Radio(
@@ -147,6 +148,8 @@ class AddTransactionView:
                 self.show_snackbar("O valor deve ser maior que zero!", AppColors.ERROR)
                 return
             
+            add_transaction(amount, self.category_field.value.strip(), self.description_field.value.strip(), datetime.now(), self.transaction_type.value)
+            
             self.data_manager.add_transaction(
                 amount=amount,
                 category=self.category_field.value.strip(),
@@ -154,7 +157,7 @@ class AddTransactionView:
                 date=datetime.now(),
                 transaction_type=self.transaction_type.value
             )
-            
+
             self.clear_form()
             
             self.show_snackbar("Transação adicionada com sucesso!", AppColors.SUCCESS)
