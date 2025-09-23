@@ -1,23 +1,47 @@
 import flet as ft
 from src.utils.colors import AppColors
 from src.components.transaction_card import TransactionCard
+from src.controllers.transaction_controller import get_all_transactions, remove_transaction
 
 class TransactionHistoryView:
     def __init__(self, data_manager, refresh_callback):
         self.data_manager = data_manager
         self.refresh_callback = refresh_callback
+        self.transaction_list = ft.Column(spacing=0, scroll=ft.ScrollMode.AUTO)
         self.page = None
 
     def refresh(self):
-        """Atualiza a lista de transações"""
-        pass
+        transactions = get_all_transactions()
+        self.transaction_list.controls.clear()
+        
+        if transactions:
+            self.transaction_list.controls.extend([
+                TransactionCard(
+                    transaction=transaction,
+                    on_delete=self.delete_transaction,
+                    on_details=self.show_transaction_details
+                ).build()
+                for transaction in transactions
+            ])
+        else:
+            self.transaction_list.controls.append(
+                ft.Container(
+                    content=ft.Text(
+                        "Nenhuma transação encontrada",
+                        color=AppColors.GRAY_MEDIUM,
+                        size=16,
+                        text_align=ft.TextAlign.CENTER
+                    ),
+                    alignment=ft.alignment.center,
+                    padding=ft.padding.all(40)
+                )
+            )
+        if self.transaction_list.page is not None:
+            self.transaction_list.update()
 
     def build(self):
-        transactions = self.data_manager.get_all_transactions()
-        
         return ft.Container(
             content=ft.Column([
-                # Header
                 ft.Container(
                     content=ft.Text(
                         "HISTÓRICO:",
@@ -28,28 +52,8 @@ class TransactionHistoryView:
                     padding=ft.padding.all(20),
                     alignment=ft.alignment.center_left
                 ),
-                
-                # Lista de transações
                 ft.Container(
-                    content=ft.Column([
-                        TransactionCard(
-                            transaction=transaction,
-                            on_delete=self.delete_transaction,
-                            on_details=self.show_transaction_details
-                        ).build()
-                        for transaction in transactions
-                    ] if transactions else [
-                        ft.Container(
-                            content=ft.Text(
-                                "Nenhuma transação encontrada",
-                                color=AppColors.GRAY_MEDIUM,
-                                size=16,
-                                text_align=ft.TextAlign.CENTER
-                            ),
-                            alignment=ft.alignment.center,
-                            padding=ft.padding.all(40)
-                        )
-                    ], spacing=0, scroll=ft.ScrollMode.AUTO),
+                    content=self.transaction_list,
                     expand=True,
                     padding=ft.padding.symmetric(horizontal=16)
                 )
@@ -59,9 +63,10 @@ class TransactionHistoryView:
         )
 
     def delete_transaction(self, transaction_id):
-        """Remove uma transação"""
-        self.data_manager.remove_transaction(transaction_id)
+        remove_transaction(transaction_id)
+        self.refresh()
         self.refresh_callback()
+
 
     def show_transaction_details(self, transaction):
         """Mostra detalhes da transação em um modal"""

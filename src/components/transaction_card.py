@@ -10,12 +10,12 @@ class TransactionCard:
 
     def build(self):
         # Formatação da data
-        date_str = self.transaction.date.strftime("%d/%m/%Y %H:%M")
+        date_str = self.transaction.timestamp.strftime("%d/%m/%Y %H:%M")
         
         # Formatação do valor
         amount_str = f"R$ {abs(self.transaction.amount):.2f}".replace(".", ",")
-        amount_color = AppColors.SUCCESS if self.transaction.amount > 0 else AppColors.ERROR
-        type_icon = Icons.ARROW_DOWNWARD if self.transaction.amount > 0 else Icons.ARROW_UPWARD
+        amount_color = AppColors.SUCCESS if self.transaction.type == 'income' else AppColors.ERROR
+        type_icon = Icons.ARROW_DOWNWARD if self.transaction.type == 'income' else Icons.ARROW_UPWARD
         
         return ft.Container(
             content=ft.Row([

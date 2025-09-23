@@ -53,7 +53,7 @@ class AddTransactionView:
                     value="income", 
                     label="Recebi",
                     label_style=ft.TextStyle(color=AppColors.WHITE),
-                    fill_color=AppColors.PRIMARY
+                    fill_color=AppColors.SUCCESS
                 ),
                 ft.Radio(
                     value="expense", 

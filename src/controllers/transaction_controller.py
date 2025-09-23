@@ -33,6 +33,19 @@ def add_transaction(amount, category, description, timestamp, transaction_type):
     finally:
         session.close()
 
+def remove_transaction(transaction_id):
+    session = SessionLocal()
+    try:
+        transaction = session.query(Transaction).filter(Transaction.id == transaction_id).first()
+        if transaction:
+            session.delete(transaction)
+            session.commit()
+    except Exception as e:
+        session.rollback()
+        print(f"Erro ao remover transação: {e}")
+    finally:
+        session.close()
+
 def income_total():
     session = SessionLocal()
     try:

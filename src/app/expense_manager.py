@@ -65,7 +65,6 @@ class ExpenseManagerApp:
 
     def show_history(self):
         self.page.clean()
-        self.history_view.refresh()
         self.page.add(
             ft.Container(
                 content=ft.Column([
@@ -75,6 +74,7 @@ class ExpenseManagerApp:
                 expand=True
             )
         )
+        self.history_view.refresh()
         self.page.update()
 
     def on_transaction_added(self):
