@@ -148,7 +148,7 @@ class AddTransactionView:
                 self.show_snackbar("O valor deve ser maior que zero!", AppColors.ERROR)
                 return
             
-            add_transaction(amount, self.category_field.value.strip().capitalize(), self.description_field.value.strip(), datetime.now(), self.transaction_type.value)
+            add_transaction(amount, self.category_field.value.strip().capitalize(), self.description_field.value.strip().capitalize(), datetime.now(), self.transaction_type.value)
             
             # self.data_manager.add_transaction(
             #     amount=amount,

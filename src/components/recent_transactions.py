@@ -41,9 +41,8 @@ class RecentTransactions:
     def _build_transaction_item(self, transaction):
         date_str = transaction.timestamp.strftime("%d/%m")
         amount_str = f"R$ {abs(transaction.amount):.2f}".replace(".", ",")
-        amount_color = AppColors.SUCCESS if transaction.amount > 0 else AppColors.ERROR
-        type_icon = Icons.ARROW_DOWNWARD if transaction.amount > 0 else Icons.ARROW_UPWARD
-        
+        amount_color = AppColors.SUCCESS if transaction.type == 'income' else AppColors.ERROR
+        type_icon = Icons.ARROW_DOWNWARD if transaction.type == 'income' else Icons.ARROW_UPWARD
         return ft.Container(
             content=ft.Row([
                 ft.Icon(
