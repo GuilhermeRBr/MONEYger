@@ -4,6 +4,7 @@ from src.components.balance_card import BalanceCard
 from src.components.chart_widget import ChartWidget
 from src.components.summary_cards import SummaryCards
 from src.components.recent_transactions import RecentTransactions
+from src.controllers.transaction_controller import income_total, expense_total
 
 class DashboardView:
     def __init__(self, data_manager, refresh_callback):
@@ -16,8 +17,8 @@ class DashboardView:
 
     def build(self):
         balance = self.data_manager.get_balance()
-        total_income = self.data_manager.get_total_income()
-        total_expenses = self.data_manager.get_total_expenses()
+        total_income = income_total()
+        total_expenses = expense_total()
         transactions_count = self.data_manager.get_transactions_count()
         recent_transactions = self.data_manager.get_all_transactions()[:3]  # Últimas 3 transações
         
@@ -46,7 +47,7 @@ class DashboardView:
                 ],
                 spacing=0,
                 expand=True,
-                scroll=ft.ScrollMode.AUTO,  # << aqui que faz diferença
+                scroll=ft.ScrollMode.AUTO, 
             ),
             expand=True,
             bgcolor=AppColors.BACKGROUND,

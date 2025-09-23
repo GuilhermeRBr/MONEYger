@@ -1,7 +1,7 @@
 import flet as ft
 from src.utils.colors import AppColors
 from datetime import datetime
-from src.models.transaction import add_transaction
+from src.controllers.transaction_controller import add_transaction
 
 class AddTransactionView:
     def __init__(self, data_manager, on_transaction_added, page):
@@ -150,13 +150,13 @@ class AddTransactionView:
             
             add_transaction(amount, self.category_field.value.strip(), self.description_field.value.strip(), datetime.now(), self.transaction_type.value)
             
-            self.data_manager.add_transaction(
-                amount=amount,
-                category=self.category_field.value.strip(),
-                description=self.description_field.value.strip(),
-                date=datetime.now(),
-                transaction_type=self.transaction_type.value
-            )
+            # self.data_manager.add_transaction(
+            #     amount=amount,
+            #     category=self.category_field.value.strip(),
+            #     description=self.description_field.value.strip(),
+            #     date=datetime.now(),
+            #     transaction_type=self.transaction_type.value
+            # )
 
             self.clear_form()
             
