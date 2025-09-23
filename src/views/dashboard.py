@@ -4,7 +4,7 @@ from src.components.balance_card import BalanceCard
 from src.components.chart_widget import ChartWidget
 from src.components.summary_cards import SummaryCards
 from src.components.recent_transactions import RecentTransactions
-from src.controllers.transaction_controller import income_total, expense_total
+from src.controllers.transaction_controller import *
 
 class DashboardView:
     def __init__(self, data_manager, refresh_callback):
@@ -16,11 +16,13 @@ class DashboardView:
         pass
 
     def build(self):
-        balance = self.data_manager.get_balance()
+        balance = get_balance()
         total_income = income_total()
         total_expenses = expense_total()
-        transactions_count = self.data_manager.get_transactions_count()
-        recent_transactions = self.data_manager.get_all_transactions()[:3]  # Últimas 3 transações
+        transactions_count = count_transactions()
+        categories_count = count_categories()
+        recent_transactions = get_all_transactions(3)
+        
         
         return ft.Container(
             content=ft.Column(
@@ -35,7 +37,7 @@ class DashboardView:
                                     total_income,
                                     total_expenses,
                                     transactions_count,
-                                    len(self.data_manager.get_expense_categories())
+                                    categories_count
                                 ).build(),
                                 ft.Divider(color=AppColors.QUATERNARY, height=20),
                                 RecentTransactions(recent_transactions).build()
