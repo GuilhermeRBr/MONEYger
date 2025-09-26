@@ -19,7 +19,7 @@ Ele permite registrar receitas e despesas, calcular automaticamente o saldo disp
 
 1. Clone este repositório:  
    ```bash
-   git clone https://github.com/seu-usuario/moneyger.git
+   git clone https://github.com/GuilhermeRBr/moneyger.git
    cd moneyger
 
 2. Crie e ative um ambiente virtual:
