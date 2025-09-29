@@ -17,13 +17,11 @@ class ChartWidget:
 
         total_width = 300
 
-        # garante que a soma sempre bate
         income_width = round((income_percentage / 100) * total_width)
         expenses_width = total_width - income_width
 
         row_children = []
 
-        # só renderiza se tiver largura mínima aceitável
         if income_width > 3:
             row_children.append(
                 ft.Container(

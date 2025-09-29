@@ -12,7 +12,6 @@ class DashboardView:
         self.refresh_callback = refresh_callback
 
     def refresh(self):
-        """Atualiza os dados da dashboard"""
         pass
 
     def build(self):

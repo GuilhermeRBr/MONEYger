@@ -69,13 +69,10 @@ class TransactionHistoryView:
 
 
     def show_transaction_details(self, transaction):
-        """Mostra detalhes da transação em um modal"""
-        # Formatação dos dados
-        date_str = transaction.date.strftime("%d/%m/%Y às %H:%M")
+        date_str = transaction.timestamp.strftime("%d/%m/%Y às %H:%M")
         amount_str = f"R$ {abs(transaction.amount):,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
         type_str = "Recebimento" if transaction.type == "income" else "Pagamento"
-        
-        # Modal de detalhes
+
         modal = ft.AlertDialog(
             title=ft.Text(
                 "Detalhes da Transação",
@@ -128,10 +125,7 @@ class TransactionHistoryView:
             ]
         )
         
-        # Como não temos acesso direto à page aqui, simularemos o modal
-        # Em uma implementação real, passaríamos a referência da page
         print(f"Detalhes da transação: {type_str} de {amount_str} em {date_str}")
 
     def close_modal(self):
-        """Fecha o modal de detalhes"""
         pass

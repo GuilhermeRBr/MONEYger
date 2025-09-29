@@ -150,14 +150,6 @@ class AddTransactionView:
             
             add_transaction(amount, self.category_field.value.strip().capitalize(), self.description_field.value.strip().capitalize(), datetime.now(), self.transaction_type.value)
             
-            # self.data_manager.add_transaction(
-            #     amount=amount,
-            #     category=self.category_field.value.strip(),
-            #     description=self.description_field.value.strip(),
-            #     date=datetime.now(),
-            #     transaction_type=self.transaction_type.value
-            # )
-
             self.clear_form()
             
             self.show_snackbar("Transação adicionada com sucesso!", AppColors.SUCCESS)
