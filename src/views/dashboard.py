@@ -7,8 +7,7 @@ from src.components.recent_transactions import RecentTransactions
 from src.controllers.transaction_controller import *
 
 class DashboardView:
-    def __init__(self, data_manager, refresh_callback):
-        self.data_manager = data_manager
+    def __init__(self, refresh_callback):
         self.refresh_callback = refresh_callback
 
     def refresh(self):

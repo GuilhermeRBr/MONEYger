@@ -4,12 +4,11 @@ from src.views.add_transaction import AddTransactionView
 from src.views.transaction_history import TransactionHistoryView
 from src.components.navigation import NavigationComponent
 from src.utils.colors import AppColors
-from src.data.mock_data import DataManager
+
 
 class ExpenseManagerApp:
     def __init__(self, page: ft.Page):
         self.page = page
-        self.data_manager = DataManager()
         self.setup_page()
         self.setup_views()
         self.setup_navigation()
@@ -25,9 +24,9 @@ class ExpenseManagerApp:
         self.page.window.resizable = False
 
     def setup_views(self):
-        self.dashboard_view = DashboardView(self.data_manager, self.refresh_data)
-        self.add_transaction_view = AddTransactionView(self.data_manager, self.on_transaction_added, self.page)
-        self.history_view = TransactionHistoryView(self.data_manager, self.refresh_data)
+        self.dashboard_view = DashboardView( self.refresh_data)
+        self.add_transaction_view = AddTransactionView( self.on_transaction_added, self.page)
+        self.history_view = TransactionHistoryView(self.refresh_data)
         
     def setup_navigation(self):
         self.navigation = NavigationComponent(

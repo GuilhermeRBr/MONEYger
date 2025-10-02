@@ -4,8 +4,7 @@ from datetime import datetime
 from src.controllers.transaction_controller import add_transaction
 
 class AddTransactionView:
-    def __init__(self, data_manager, on_transaction_added, page):
-        self.data_manager = data_manager
+    def __init__(self,on_transaction_added, page):
         self.on_transaction_added = on_transaction_added
         self.page = page
         self.setup_form()
