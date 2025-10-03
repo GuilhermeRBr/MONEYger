@@ -26,7 +26,7 @@ class ExpenseManagerApp:
     def setup_views(self):
         self.dashboard_view = DashboardView( self.refresh_data)
         self.add_transaction_view = AddTransactionView( self.on_transaction_added, self.page)
-        self.history_view = TransactionHistoryView(self.refresh_data)
+        self.history_view = TransactionHistoryView(self.page, self.refresh_data)
         
     def setup_navigation(self):
         self.navigation = NavigationComponent(

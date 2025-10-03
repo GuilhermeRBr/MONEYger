@@ -4,10 +4,10 @@ from src.components.transaction_card import TransactionCard
 from src.controllers.transaction_controller import get_all_transactions, remove_transaction
 
 class TransactionHistoryView:
-    def __init__(self, refresh_callback):
+    def __init__(self, page: ft.Page, refresh_callback):
         self.refresh_callback = refresh_callback
         self.transaction_list = ft.Column(spacing=0, scroll=ft.ScrollMode.AUTO)
-        self.page = None
+        self.page = page
 
     def refresh(self):
         transactions = get_all_transactions()
@@ -73,6 +73,7 @@ class TransactionHistoryView:
         type_str = "Recebimento" if transaction.type == "income" else "Pagamento"
 
         modal = ft.AlertDialog(
+            modal=True,
             title=ft.Text(
                 "Detalhes da Transação",
                 color=AppColors.WHITE,
@@ -118,13 +119,12 @@ class TransactionHistoryView:
             actions=[
                 ft.TextButton(
                     text="Fechar",
-                    on_click=lambda _: self.close_modal(),
+                    on_click=lambda _: self.page.close(modal),
                     style=ft.ButtonStyle(color=AppColors.PRIMARY)
                 )
             ]
         )
-        
-        print(f"Detalhes da transação: {type_str} de {amount_str} em {date_str}")
 
-    def close_modal(self):
-        pass
+        self.page.open(modal)
+        self.page.update()
+        

@@ -3,14 +3,18 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine, func
 from dotenv import load_dotenv
 from src.models.transaction import Transaction
+from src.models.transaction import Base
 
 load_dotenv()
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 
-engine = create_engine(DATABASE_URL, echo=True)
+engine = create_engine(DATABASE_URL)
 
 SessionLocal = sessionmaker(bind=engine)
+
+Base.metadata.create_all(bind=engine)
+
 
 
 def add_transaction(amount, category, description, timestamp, transaction_type):
